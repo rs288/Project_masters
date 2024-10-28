@@ -4,9 +4,9 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('backgroundImage', '/img/fondo_inicio.jpg');
-        this.load.image('personaje1', '/img/personaje1.png');
-        this.load.image('personaje2', '/img/personaje2.png');
+        this.load.image('backgroundImage', 'img/fondo_inicio.jpg');
+        this.load.image('personaje1', 'img/personaje1.png');
+        this.load.image('personaje2', 'img/personaje2.png');
     }
 
     create() {
