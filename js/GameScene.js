@@ -54,7 +54,7 @@
                 const boxX = this.sys.game.config.width / 2 - boxWidth / 2;
                 const boxY = 50;
                 const box = this.add.graphics();
-                box.fillStyle(0x95a399, 0.8);
+                box.fillStyle(0x95a399, 1); // Cambiado de 0.8 a 1 para quitar la transparencia
                 box.lineStyle(3, 0x504a89, 1);
                 box.fillRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
                 box.strokeRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
@@ -93,7 +93,7 @@
                     )
                     .setInteractive({ useHandCursor: true })
                         .on('pointerdown', () => this.checkAnswer(index))
-                        .on('pointerover', () => text.setStyle({ fill: '#d45c56' }))
+                        .on('pointerover', () => text.setStyle({ fill: '#FFE600' }))
                         .on('pointerout', () => text.setStyle({ fill: '#000' }));
                     this.questionTexts.push(text);
                 });
@@ -103,19 +103,36 @@
                 const question = questions[this.currentQuestionIndex];
                 const correctAnswerIndex = question.answer;
 
+                 // Encuentra el texto de la opción seleccionada (está en el array questionTexts)
+                const selectedText = this.questionTexts[selectedIndex + 1]; // +1 porque el primer elemento es la pregunta
+                const correctText = this.questionTexts[correctAnswerIndex]; // el texto de la respuesta correcta
+
                 if (selectedIndex === correctAnswerIndex - 1) {
                     this.score++;
-                    this.feedbackText.setText("¡Correcto!");
-                    this.feedbackText.setColor('#0f0');
-                    this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
+                    // posible idea de texto de retroalimentacion
+                    //this.feedbackText.setText("¡Correcto!");
+                    //this.feedbackText.setColor('#0f0');
+                    //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
+                    // Marca la respuesta correcta en verde
+                    selectedText.setStyle({ fill: '#00FF00' }); // Color verde
                 } else {
-                    this.feedbackText.setText(`Incorrecto. La respuesta correcta era: ${question.options[correctAnswerIndex - 1]}`);
-                    this.feedbackText.setColor('#f00');
-                    this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
+                    // Posible idea de texto de retroalimentacion
+                    //this.feedbackText.setText(`Incorrecto. La respuesta correcta era: ${question.options[correctAnswerIndex - 1]}`);
+                    //this.feedbackText.setColor('#f00');
+                    //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
+                    // Marca la respuesta incorrecta en rojo
+                    selectedText.setStyle({ fill: '#FF0000' }); // Color rojo
+                    // Opcionalmente, puedes mostrar la respuesta correcta en verde
+                    //correctText.setStyle({ fill: '#00FF00' }); // Color verde
                 }
 
                 // Aseguramos que el texto esté en la posición correcta
                 this.feedbackText.setPosition(400, 500);
+
+                // Desactivar la interactividad de todas las opciones después de responder
+                this.questionTexts.slice(1).forEach(text => {
+                    text.removeInteractive();
+                });
 
                 this.currentQuestionIndex++;
                 this.time.delayedCall(3000, this.nextQuestion, [], this);
