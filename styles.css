@@ -1,8 +1,36 @@
 body {
+    background: #333;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+#game-canvas {
+    margin: 0 auto;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    /*background-color: #000;*/
+}
+
+canvas {
+    margin: auto;
+     max-width: 100% !important;
+     max-height: 100vh !important;
+     object-fit: contain;
+}  
+/* Media queries para diferentes tamaños de pantalla */
+@media screen and (max-width: 768px) {
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    canvas {
+        height: 100vh !important;
+        width: auto !important;
+    }
 }

@@ -1,6 +1,11 @@
 class StartScene extends Phaser.Scene {
     constructor() {
         super('StartScene');
+        this.titleText = null;
+        this.subtitleText = null;
+        this.startButton = null;
+        this.personaje1 = null;
+        this.personaje2 = null;
     }
 
     preload() {
@@ -9,36 +14,42 @@ class StartScene extends Phaser.Scene {
         this.load.image('personaje2', 'img/personaje2.png');
     }
 
-    create() {
-        const background = this.add.image(0, 0, 'backgroundImage');
-        background.setOrigin(0, 0);
-        background.displayWidth = this.sys.canvas.width;
-        background.displayHeight = this.sys.canvas.height;
+    // Método para crear/actualizar textos y personajes
+    updateTexts(width, height) {
+        // Si los textos ya existen, destruirlos
+        if (this.titleText) this.titleText.destroy();
+        if (this.subtitleText) this.subtitleText.destroy();
+        if (this.startButton) this.startButton.destroy();
+        if (this.personaje1) this.personaje1.destroy();
+        if (this.personaje2) this.personaje2.destroy();
 
-        this.add.text(400, 200, "Project Masters: Software", {
-            fontSize: '26px', 
+        // Crear personajes
+        this.personaje1 = this.add.image(width * 0.2, height * 0.6, 'personaje1');
+        this.personaje1.setScale(Math.min(width/800, height/600) * 0.8);
+
+        this.personaje2 = this.add.image(width * 0.8, height * 0.6, 'personaje2');
+        this.personaje2.setScale(Math.min(width/800, height/600) * 0.8);
+        this.personaje2.setFlipX(true);
+
+        // Crear nuevos textos
+        this.titleText = this.add.text(width/2, height * 0.2, "Project Masters: Software", {
+            fontSize: Math.min(width * 0.05, 30) + 'px', 
             fill: '#ffff00',
             fontFamily: '"Press Start 2P"',
             stroke: '#000',
             strokeThickness: 4
         }).setOrigin(0.5);
-        this.add.text(400, 250, "Challenge", { 
-            fontSize: '26px', 
+
+        this.subtitleText = this.add.text(width/2, height * 0.3, "Challenge", {
+            fontSize: Math.min(width * 0.05, 30) + 'px',
             fill: '#ffff00', 
             fontFamily: '"Press Start 2P"',  
             stroke: '#000', 
             strokeThickness: 4  
         }).setOrigin(0.5);
 
-        const personaje1 = this.add.image(150, 380, 'personaje1');
-        personaje1.setScale(0.8);
-
-        const personaje2 = this.add.image(650, 380, 'personaje2');
-        personaje2.setScale(0.8);
-        personaje2.setFlipX(true);
-
-        const startButton = this.add.text(400, 420, "Start Game", {
-            fontSize: '24px',
+        this.startButton = this.add.text(width/2, height * 0.6, "Start Game", {
+            fontSize: Math.min(width * 0.03, 24) + 'px',
             fill: '#eee3cf',
             fontFamily: '"Press Start 2P"',
             backgroundColor: '#282a1d',
@@ -49,22 +60,38 @@ class StartScene extends Phaser.Scene {
                 bottom: 10
             }
         })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerdown', () => this.scene.start('GameScene'))
-            .on('pointerover', function() {
-                this.setStyle({ fill: '#ffff00', backgroundColor: '#666666' });
-            })
-            .on('pointerout', function() {
-                this.setStyle({ fill: '#eee3cf', backgroundColor: '#282a1d' });
-            });
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => this.scene.start('GameScene'))
+        .on('pointerover', function() {
+            this.setStyle({ fill: '#ffff00', backgroundColor: '#666666' });
+        })
+        .on('pointerout', function() {
+            this.setStyle({ fill: '#eee3cf', backgroundColor: '#282a1d' });
+        });
+    }
 
-        const buttonBorder = this.add.rectangle(400, 350, 0, 0, 0x000000)
-            .setOrigin(0.5);
-        
-        buttonBorder.width = startButton.width + 10;
-        buttonBorder.height = startButton.height + 10;
-        
-        buttonBorder.setDepth(startButton.depth - 1);
+    create() {
+        const width = this.scale.width;
+        const height = this.scale.height;
+
+        const background = this.add.image(width/2, height/2, "backgroundImage");
+        background.setDisplaySize(width, height);
+
+        // Crear textos y personajes iniciales
+        this.updateTexts(width, height);
+
+        // Evento resize
+        this.scale.on('resize', (gameSize) => {
+            const newWidth = gameSize.width;
+            const newHeight = gameSize.height;
+
+            // Actualizar fondo
+            background.setPosition(newWidth/2, newHeight/2);
+            background.setDisplaySize(newWidth, newHeight);
+
+            // Actualizar todos los textos y personajes
+            this.updateTexts(newWidth, newHeight);
+        });
     }
 }
