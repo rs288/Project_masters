@@ -2,6 +2,8 @@
             constructor() {
                 super('GameScene');
                 this.box = null;
+                this.dragon = null;  // Añade esta línea
+                this.personaje = null;  // Añade esta línea
             }
 
             init() {
@@ -20,6 +22,7 @@
                 //this.load.image('personaje', './img/personaje2.png');
                 // Cargar Dragon
                 this.load.image('dragon', 'img/dragon.png');
+                this.load.image('fireball', 'img/fuego.png');
             }
 
             create() {
@@ -123,6 +126,7 @@
                     //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
                     // Marca la respuesta incorrecta en rojo
                     selectedText.setStyle({ fill: '#FF0000' }); // Color rojo
+                    this.launchFireball();
                     // Opcionalmente, puedes mostrar la respuesta correcta en verde
                     //correctText.setStyle({ fill: '#00FF00' }); // Color verde
                 }
@@ -138,8 +142,21 @@
                 this.currentQuestionIndex++;
                 this.time.delayedCall(3000, this.nextQuestion, [], this);
             }
-
-
+            
+            launchFireball() {
+                const fireball = this.add.image(650, 500, 'fireball');
+                fireball.setScale(2); // Ajusta el tamaño según necesites
+                this.tweens.add({
+                    targets: fireball,
+                    x: 150,
+                    y: 500,
+                    duration: 2000,
+                    ease: 'Linear',
+                    onComplete: () => {
+                        fireball.destroy();
+                    }
+                });
+            }
 
             nextQuestion() {
                 this.questionTexts.forEach(text => text.destroy());
