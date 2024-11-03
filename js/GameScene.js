@@ -93,7 +93,8 @@
                     )
                     .setInteractive({ useHandCursor: true })
                         .on('pointerdown', () => this.checkAnswer(index))
-                        .on('pointerover', () => text.setStyle({ fill: '#FFE600' }))
+                        .on('pointerover', () => text.setStyle({ fill: '#000' })) // color negro
+                        //.on('pointerover', () => text.setStyle({ fill: '#FFE600' })) //color amarillo
                         .on('pointerout', () => text.setStyle({ fill: '#000' }));
                     this.questionTexts.push(text);
                 });
