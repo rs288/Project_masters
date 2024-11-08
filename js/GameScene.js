@@ -23,6 +23,7 @@
                 // Cargar Dragon
                 this.load.image('dragon', 'img/dragon.png');
                 this.load.image('fireball', 'img/fuego.png');
+                this.load.image('espada', 'img/espada.png');
             }
 
             create() {
@@ -43,12 +44,12 @@
                 }).setOrigin(0.5);
                 this.showQuestion();
 
-                const personaje = this.add.image(150, 500, 'personaje');
-                personaje.setScale(0.5);
+                this.personaje = this.add.image(150, 500, 'personaje');
+                this.personaje.setScale(0.5);
 
 
-                const dragon = this.add.image(650, 500, 'dragon');
-                dragon.setScale(0.5);
+                this.dragon = this.add.image(650, 500, 'dragon');
+                this.dragon.setScale(0.5);
             }
 
             createQuestionBox() {
@@ -96,7 +97,7 @@
                     )
                     .setInteractive({ useHandCursor: true })
                         .on('pointerdown', () => this.checkAnswer(index))
-                        .on('pointerover', () => text.setStyle({ fill: '#000' })) // color negro
+                        .on('pointerover', () => text.setStyle({ fill: '#7D6608' })) // color negro
                         //.on('pointerover', () => text.setStyle({ fill: '#FFE600' })) //color amarillo
                         .on('pointerout', () => text.setStyle({ fill: '#000' }));
                     this.questionTexts.push(text);
@@ -119,6 +120,7 @@
                     //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
                     // Marca la respuesta correcta en verde
                     selectedText.setStyle({ fill: '#00FF00' }); // Color verde
+                    this.lanzarEspada();
                 } else {
                     // Posible idea de texto de retroalimentacion
                     //this.feedbackText.setText(`Incorrecto. La respuesta correcta era: ${question.options[correctAnswerIndex - 1]}`);
@@ -157,7 +159,33 @@
                     }
                 });
             }
-
+            
+            lanzarEspada() {
+                const espada = this.add.image(this.personaje.x+40, this.personaje.y+20, 'espada');
+                espada.setScale(0.1); // Ajusta el tamaño según necesites
+                this.tweens.add({
+                    targets: espada,
+                    x: 630,
+                    y: this.dragon,
+                    duration: 1500,
+                    ease: 'Linear',
+                    onComplete: () => {
+                        // Al llegar al objetivo, comenzamos a regresar el bumerán
+                        this.tweens.add({
+                            targets: espada,
+                            x: this.personaje.x+35,
+                            y: this.personaje.y+20,
+                                angle: -740, // Rotación de 720 grados al regresar
+                            duration: 1500, // Tiempo para regresar
+                            ease: 'Linear',
+                            onComplete: () => {
+                                espada.destroy();
+                            }
+                        });
+                    }
+                });
+            }
+            
             nextQuestion() {
                 this.questionTexts.forEach(text => text.destroy());
                 this.questionTexts = [];
