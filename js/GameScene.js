@@ -187,10 +187,7 @@
                         this.corazonPersonaje.destroy();
                     }, [], this);
                     this.time.delayedCall(3500, () => {
-                        this.scene.start('GameOverScene', { 
-                        score: this.score,
-                        totalQuestions: this.currentQuestionIndex 
-                        }); 
+                        this.scene.start('GameOverScene'); 
                     }, [], this);
 
                 }
@@ -254,7 +251,7 @@
                     this.showQuestion(this.questionBox);
                     this.drawOvals(this.questionBox);
                 }  else {
-                    this.scene.start('GameOverScene', { score: this.score,
+                    this.scene.start('FinishScene', { score: this.score,
                     totalQuestions: this.currentQuestionIndex });
                 }
             }
