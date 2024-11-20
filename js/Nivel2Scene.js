@@ -68,7 +68,8 @@
                 this.drawOvals(this.questionBox);
 
                  const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "Kanban\nNivel 2", {
-                     fontSize: '16px',
+                     fontSize: '10px',
+                     fontFamily: '"Press Start 2P"',
                      fill: '#DED947',
                      align: 'center'
                  }).setOrigin(0.5); 

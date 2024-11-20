@@ -44,7 +44,7 @@ const questions2 = [
     },
     {
         question: "¿Cuál es una de las reglas clave de Kanban?",
-        options: ["Completar tareas sin seguir prioridades", "Evitar cambios en el proceso de trabajo", "Evitar cambios en el proceso de trabajo"],
+        options: ["Completar tareas sin seguir prioridades", "Evitar cambios en el proceso de trabajo", "Limitar la cantidad de trabajo en progreso"],
         answer: 3
     },
     {
