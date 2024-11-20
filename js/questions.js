@@ -11,7 +11,7 @@ const questions = [
     },
     {
         question: "¿Qué es un Sprint en Scrum?",
-        options: ["un período de tiempo fijo, durante el cual un equipo trabaja para completar un conjunto de tareas", "Una lista de tareas pendientes para el equipo", "Un documento que describe el proyecto"],
+        options: ["Iteración corta para completar tareas del proyecto", "Una lista de tareas pendientes para el equipo", "Un documento que describe el proyecto"],
         answer: 1
     },
     {
