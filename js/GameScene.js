@@ -66,6 +66,12 @@
 
                 // Dibujar tres óvalos dentro del cuadro
                 this.drawOvals(this.questionBox);
+
+                 const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "Scrum\nNivel 1", {
+                     fontSize: '16px',
+                     fill: '#DED947',
+                     align: 'center'
+                 }).setOrigin(0.5); 
             }
 
             drawHearts() {
@@ -91,7 +97,7 @@
             }
             
             createQuestionBox() {
-                const boxWidth = this.sys.game.config.width * 0.82;  // Aumenté el ancho para que quepa el texto de la pregunta
+                const boxWidth = this.sys.game.config.width * 0.75;  // Aumenté el ancho para que quepa el texto de la pregunta
                 const boxHeight = this.sys.game.config.height * 0.45;  // Aumenté la altura para que quepan todas las opciones
                 const boxX = this.sys.game.config.width / 2 - boxWidth / 2;
                 const boxY = 50;
@@ -106,7 +112,7 @@
             drawOvals(questionBox) {
                 const ovalWidth = 180; // Ancho de los óvalos
                 const ovalHeight = 70; // Alto de los óvalos
-                const spacing = 20; // Espaciado entre los óvalos
+                const spacing = 10; // Espaciado entre los óvalos
 
                 const startX = questionBox.x + (questionBox.width - (ovalWidth * 3 + spacing * 2)) / 2; // Centra los óvalos dentro del cuadro
                 const startY = questionBox.y + questionBox.height - ovalHeight - 10; // Coloca los óvalos 10 píxeles menos que la altura del cuadro
