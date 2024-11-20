@@ -3,13 +3,15 @@
                 super('GameScene');
                 this.box = null;
                 this.dragon = null;  // Añade esta línea
-                this.personaje = null;  // Añade esta línea
+                this.personaje = null;  // añade esta línea
+                this.questionBox = null;
             }
 
             init() {
                 this.currentQuestionIndex = 0;
                 this.score = 0;
                 this.questionTexts = [];
+                this.hearts = []; 
             }
 
 
@@ -22,6 +24,7 @@
                 //this.load.image('personaje', './img/personaje2.png');
                 // Cargar Dragon
                 this.load.image('dragon', 'img/dragon.png');
+                this.load.image('corazon', 'img/corazon.png')
                 this.load.image('fireball', 'img/fuego.png');
                 this.load.image('espada', 'img/espada.png');
             }
@@ -42,95 +45,148 @@
                     wordWrap: { width: 350 }, // Limita el ancho del texto a 400 píxeles (600 - 200)
                     align: 'left' // Alinea el texto a la izquierda
                 }).setOrigin(0.5);
-                this.showQuestion();
-
+             //   this.showQuestion();
+                
                 this.personaje = this.add.image(150, 500, 'personaje');
                 this.personaje.setScale(0.5);
 
+                this.corazonPersonaje = this.add.image(150, 400, 'corazon');
+                this.corazonPersonaje.setScale(0.4);
 
                 this.dragon = this.add.image(650, 500, 'dragon');
                 this.dragon.setScale(0.5);
+
+                // Añadir la imagen del corazón encima del dragón
+                this.drawHearts();
+                // Llamar al método createQuestionBox para dibujar el cuadro
+                this.questionBox = this.createQuestionBox();
+
+                // Mostrar la pregunta centrada en el cuadro
+                this.showQuestion(this.questionBox);
+
+                // Dibujar tres óvalos dentro del cuadro
+                this.drawOvals(this.questionBox);
             }
 
+            drawHearts() {
+                const heartWidth = 30; // Ancho de cada corazón
+                const heartHeight = 30; // Alto de cada corazón
+                const spacing = 10; // Espaciado entre corazones
+                const startX = 550; // Posición X inicial
+                const startY = 400; // Posición Y inicial
+                for (let i = 0; i < 5; i++) {
+                    const heart = this.add.image(startX + i * (heartWidth + spacing), startY, 'corazon');
+                    heart.setScale(0.4); // Ajusta el tamaño según necesites
+                    this.hearts.push(heart);
+                }
+            }
+
+            removeHeart() {
+                if (this.hearts.length > 0) {
+                    // Elimina el último corazón de la lista y de la pantalla
+                    const heart = this.hearts.pop();
+                    heart.destroy(); // Destruye el objeto del corazón en la escena
+                    //console.log('Un corazón ha sido eliminado.');
+                }
+            }
+            
             createQuestionBox() {
                 const boxWidth = this.sys.game.config.width * 0.82;  // Aumenté el ancho para que quepa el texto de la pregunta
                 const boxHeight = this.sys.game.config.height * 0.45;  // Aumenté la altura para que quepan todas las opciones
                 const boxX = this.sys.game.config.width / 2 - boxWidth / 2;
                 const boxY = 50;
                 const box = this.add.graphics();
-                box.fillStyle(0x95a399, 1); // Cambiado de 0.8 a 1 para quitar la transparencia
-                box.lineStyle(3, 0x504a89, 1);
+                box.fillStyle(0xA8B8A9, 0.88);
+                box.lineStyle(3, 0x514A8B, 1);
                 box.fillRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
                 box.strokeRoundedRect(boxX, boxY, boxWidth, boxHeight, 15);
                 return { x: boxX, y: boxY, width: boxWidth, height: boxHeight };
             }
 
-            showQuestion() {
-                this.feedbackText.setText("");
+            drawOvals(questionBox) {
+                const ovalWidth = 180; // Ancho de los óvalos
+                const ovalHeight = 70; // Alto de los óvalos
+                const spacing = 20; // Espaciado entre los óvalos
 
-                const question = questions[this.currentQuestionIndex];
-                const box = this.createQuestionBox();
+                const startX = questionBox.x + (questionBox.width - (ovalWidth * 3 + spacing * 2)) / 2; // Centra los óvalos dentro del cuadro
+                const startY = questionBox.y + questionBox.height - ovalHeight - 10; // Coloca los óvalos 10 píxeles menos que la altura del cuadro
 
-                // Añadir la pregunta
-                const questionText = this.add.text(box.x + 20, box.y + 20, question.question, { 
-                    fontSize: '20px',
-                    fill: '#000',
-                    wordWrap: { width: box.width - 40 }
-                });
-                this.questionTexts.push(questionText);
-
-                // Calcular el espacio disponible para las opciones
-                const availableHeight = box.height - questionText.height - 60; // Espacio para opciones
-                const optionHeight = availableHeight / question.options.length;
-
-
-                question.options.forEach((option, index) => {
+                const graphics = this.add.graphics();
+                const opciones = questions[this.currentQuestionIndex].options;
+                // Dibuja tres óvalos
+                for (let i = 0; i < 3; i++) {
+                    graphics.fillStyle(0xA8B8A9, 1); // Color de los óvalos
+                    graphics.fillRoundedRect(startX + i * (ovalWidth + spacing), startY - ovalHeight / 2, ovalWidth, ovalHeight, ovalHeight / 2); // Dibuja el óvalo
+                    // Dibuja el borde del óvalo
+                    graphics.lineStyle(2, 0x514A8B, 0.98); // Borde morado
+                    graphics.strokeRoundedRect(startX + i * (ovalWidth + spacing), startY - ovalHeight / 2, ovalWidth, ovalHeight, ovalHeight / 2); // Dibuja el borde
+                    // Agrega la opción dentro del óvalo
                     const text = this.add.text(
-                        box.x + 40, 
-                        box.y + questionText.height + 60 + (index * optionHeight),
-                        `${index + 1}. ${option}`,
+                        startX + i * (ovalWidth + spacing) + ovalWidth / 2, // Centra el texto horizontalmente dentro del óvalo
+                        startY, // Posición Y
+                        opciones[i], // Opción correspondiente
                         { 
-                            fontSize: '18px', 
+                            fontSize: '13px', 
                             fill: '#000',
-                            wordWrap: { width: box.width - 40 }
+                            align: 'center',
+                            padding: { x: 10, y: 5 }, // Agrega un poco de padding interno
+                            wordWrap: { width: ovalWidth - 20 } 
                         }
-                    )
-                    .setInteractive({ useHandCursor: true })
-                        .on('pointerdown', () => this.checkAnswer(index))
-                        .on('pointerover', () => text.setStyle({ fill: '#7D6608' })) // color negro
-                        //.on('pointerover', () => text.setStyle({ fill: '#FFE600' })) //color amarillo
-                        .on('pointerout', () => text.setStyle({ fill: '#000' }));
+                    ).setOrigin(0.5) // Centra el texto
+                      .setInteractive({ useHandCursor: true }) // Habilita el cursor de mano
+                      //.on('pointerdown', () => console.log(`Índice seleccionado: ${i}`)) // Imprime la respuesta seleccionada en consola
+                        .on('pointerdown', () => this.checkAnswer(i))
+                     // .on('pointerover', () => text.setStyle({ fill: '#fff' })) // Cambia el color a amarillo al pasar el mouse
+                      .on('pointerout', () => text.setStyle({ fill: '#000' })); // Vuelve al color original al salir
                     this.questionTexts.push(text);
-                });
+                }
+            }
+
+            showQuestion(questionBox) {
+                const question = questions[this.currentQuestionIndex]; // Obtén la pregunta actual
+                
+                const questionText = this.add.text(questionBox.x + questionBox.width / 2, questionBox.y + questionBox.height / 4, question.question,{
+                    // Asumiendo que `question.text` contiene el texto de la pregunta
+                    fontSize: '24px',
+                    fill: '#000',
+                    wordWrap: { width: questionBox.width - 40 }, // Ajustar el ancho del texto
+                    align: 'center'
+                }).setOrigin(0.5); // Centra el texto horizontalmente
+
+                this.questionTexts.push(questionText);
             }
 
             checkAnswer(selectedIndex) {
                 const question = questions[this.currentQuestionIndex];
                 const correctAnswerIndex = question.answer;
-
+                //console.log(`Índice seleccionado: ${correctAnswerIndex}`);
                  // Encuentra el texto de la opción seleccionada (está en el array questionTexts)
                 const selectedText = this.questionTexts[selectedIndex + 1]; // +1 porque el primer elemento es la pregunta
                 const correctText = this.questionTexts[correctAnswerIndex]; // el texto de la respuesta correcta
 
                 if (selectedIndex === correctAnswerIndex - 1) {
                     this.score++;
-                    // posible idea de texto de retroalimentacion
-                    //this.feedbackText.setText("¡Correcto!");
-                    //this.feedbackText.setColor('#0f0');
-                    //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
                     // Marca la respuesta correcta en verde
-                    selectedText.setStyle({ fill: '#00FF00' }); // Color verde
+                    selectedText.setStyle({ fill: '#1A942C' }); // Color verde
                     this.lanzarEspada();
+                    this.time.delayedCall(1400, this.removeHeart, [], this);
+                    this.currentQuestionIndex++;
+                    this.time.delayedCall(3200, this.nextQuestion, [], this);
                 } else {
-                    // Posible idea de texto de retroalimentacion
-                    //this.feedbackText.setText(`Incorrecto. La respuesta correcta era: ${question.options[correctAnswerIndex - 1]}`);
-                    //this.feedbackText.setColor('#f00');
-                    //this.feedbackText.setShadow(2, 2, '#000', 0); // Sombra blanca
                     // Marca la respuesta incorrecta en rojo
-                    selectedText.setStyle({ fill: '#FF0000' }); // Color rojo
+                    selectedText.setStyle({ fill: '#F91010' }); // Color rojo
                     this.launchFireball();
-                    // Opcionalmente, puedes mostrar la respuesta correcta en verde
-                    //correctText.setStyle({ fill: '#00FF00' }); // Color verde
+                    this.time.delayedCall(2100, () => {
+                        
+                        this.corazonPersonaje.destroy();
+                    }, [], this);
+                    this.time.delayedCall(3500, () => {
+                        this.scene.start('GameOverScene', { 
+                        score: this.score,
+                        totalQuestions: this.currentQuestionIndex 
+                        }); 
+                    }, [], this);
+
                 }
 
                 // Aseguramos que el texto esté en la posición correcta
@@ -141,8 +197,6 @@
                     text.removeInteractive();
                 });
 
-                this.currentQuestionIndex++;
-                this.time.delayedCall(3000, this.nextQuestion, [], this);
             }
             
             launchFireball() {
@@ -167,15 +221,15 @@
                     targets: espada,
                     x: 630,
                     y: this.dragon,
-                    duration: 1500,
+                    duration: 1200,
                     ease: 'Linear',
                     onComplete: () => {
-                        // Al llegar al objetivo, comenzamos a regresar el bumerán
+                        // Al llegar al objetivo, comenzamos a regresar la espada
                         this.tweens.add({
                             targets: espada,
                             x: this.personaje.x+35,
                             y: this.personaje.y+20,
-                                angle: -740, // Rotación de 720 grados al regresar
+                                angle: -740, // Rotación para regresar
                             duration: 1500, // Tiempo para regresar
                             ease: 'Linear',
                             onComplete: () => {
@@ -191,10 +245,11 @@
                 this.questionTexts = [];
 
                 if (this.currentQuestionIndex < questions.length) {
-                    this.showQuestion();
-                } else {
+                    this.showQuestion(this.questionBox);
+                    this.drawOvals(this.questionBox);
+                }  else {
                     this.scene.start('GameOverScene', { score: this.score,
                     totalQuestions: this.currentQuestionIndex });
+                }
             }
-        }
     }
