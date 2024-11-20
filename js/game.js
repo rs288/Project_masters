@@ -18,7 +18,7 @@ window.onload = function() {
                 height: 1200
             }
         },
-        scene: [StartScene, GameScene, GameOverScene, FinishScene]
+        scene: [StartScene, MapaScene, GameScene, GameOverScene, FinishScene]
     };
 
     new Phaser.Game(config);
