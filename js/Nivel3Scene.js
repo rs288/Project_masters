@@ -1,8 +1,8 @@
-        class GameScene extends Phaser.Scene {
+        class Nivel3Scene extends Phaser.Scene {
             constructor() {
-                super('GameScene');
+                super('Nivel3Scene');
                 this.box = null;
-                this.dragon = null;  // Añade esta línea
+                this.villano = null;  // Añade esta línea
                 this.personaje = null;  // añade esta línea
                 this.questionBox = null;
             }
@@ -17,13 +17,13 @@
 
             preload() {
                 // Carga la imagen de fondo
-                this.load.image('backgroundQuestion', 'img/fondo_preguntas.jpg');
+                this.load.image('nivel3', 'img/Nivel3.jpg');
                 // Carga personaje 1
                 this.load.image('personaje', 'img/personaje1.png');
                 // Cargar personaje 2
                 //this.load.image('personaje', './img/personaje2.png');
-                // Cargar Dragon
-                this.load.image('dragon', 'img/dragon.png');
+                // Cargar villano
+                this.load.image('villano3', 'img/villano3.png');
                 this.load.image('corazon', 'img/corazon.png')
                 this.load.image('fireball', 'img/fuego.png');
                 this.load.image('espada', 'img/espada.png');
@@ -31,7 +31,7 @@
 
             create() {
                 // Añade la imagen de fondo y ajústala para cubrir toda la escena
-                const background = this.add.image(0, 0, 'backgroundQuestion');
+                const background = this.add.image(0, 0, 'nivel3');
                 background.setOrigin(0, 0);
 
                 // Ajusta el tamaño de la imagen para cubrir toda la escena
@@ -53,10 +53,10 @@
                 this.corazonPersonaje = this.add.image(150, 400, 'corazon');
                 this.corazonPersonaje.setScale(0.4);
 
-                this.dragon = this.add.image(650, 500, 'dragon');
-                this.dragon.setScale(0.5);
+                this.villano = this.add.image(650, 500, 'villano3');
+                this.villano.setScale(0.4);
 
-                // Añadir la imagen del corazón encima del dragón
+                // Añadir la imagen del corazón encima del villano
                 this.drawHearts();
                 // Llamar al método createQuestionBox para dibujar el cuadro
                 this.questionBox = this.createQuestionBox();
@@ -67,7 +67,7 @@
                 // Dibujar tres óvalos dentro del cuadro
                 this.drawOvals(this.questionBox);
 
-                 const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "Scrum\nNivel 1", {
+                 const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "PMI\nNivel 3", {
                      fontSize: '16px',
                      fill: '#DED947',
                      align: 'center'
@@ -118,7 +118,7 @@
                 const startY = questionBox.y + questionBox.height - ovalHeight - 10; // Coloca los óvalos 10 píxeles menos que la altura del cuadro
 
                 const graphics = this.add.graphics();
-                const opciones = questions[this.currentQuestionIndex].options;
+                const opciones = questions3[this.currentQuestionIndex].options;
                 // Dibuja tres óvalos
                 for (let i = 0; i < 3; i++) {
                     graphics.fillStyle(0xA8B8A9, 1); // Color de los óvalos
@@ -149,7 +149,7 @@
             }
 
             showQuestion(questionBox) {
-                const question = questions[this.currentQuestionIndex]; // Obtén la pregunta actual
+                const question = questions3[this.currentQuestionIndex]; // Obtén la pregunta actual
                 
                 const questionText = this.add.text(questionBox.x + questionBox.width / 2, questionBox.y + questionBox.height / 4, question.question,{
                     // Asumiendo que `question.text` contiene el texto de la pregunta
@@ -163,7 +163,7 @@
             }
 
             checkAnswer(selectedIndex) {
-                const question = questions[this.currentQuestionIndex];
+                const question = questions3[this.currentQuestionIndex];
                 const correctAnswerIndex = question.answer;
                 //console.log(`Índice seleccionado: ${correctAnswerIndex}`);
                  // Encuentra el texto de la opción seleccionada (está en el array questionTexts)
@@ -223,7 +223,7 @@
                 this.tweens.add({
                     targets: espada,
                     x: 630,
-                    y: this.dragon,
+                    y: this.villano,
                     duration: 1200,
                     ease: 'Linear',
                     onComplete: () => {

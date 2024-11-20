@@ -15,7 +15,7 @@ class GameOverScene extends Phaser.Scene {
         background.setDisplaySize(width, height);
 
         this.time.delayedCall(3000, () => {
-            this.scene.start('StartScene'); 
+            this.scene.start('MapaScene'); 
         }, [], this);
         // Evento resize
         this.scale.on('resize', (gameSize) => {

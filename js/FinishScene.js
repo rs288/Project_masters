@@ -52,7 +52,7 @@ class FinishScene extends Phaser.Scene {
         const restartButton = this.add.text(
             box.x + box.width / 2, 
             box.y + box.height - 50,
-            'Reiniciar Juego', 
+            'Ir al Mapa', 
             { 
                 fontSize: '24px', 
                 fill: '#fff',
@@ -67,7 +67,7 @@ class FinishScene extends Phaser.Scene {
         )
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.scene.start('StartScene'))
+        .on('pointerdown', () => this.scene.start('MapaScene'))
         .on('pointerover', function() {
             this.setStyle({ fill: '#ffff00', backgroundColor: '#666666' });
         })
