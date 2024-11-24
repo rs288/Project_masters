@@ -136,28 +136,28 @@ const questions5 = [
 ];
 const questions6 = [
     {
-        question: "¿Cuál es la primera fase de la metodología en Cascada?",
-        options: ["Diseño", "Implementación", "Requerimientos"],
-        answer: 3
-    },
-    {
-        question: "¿Qué característica define mejor a la metodología en Cascada?",
-        options: ["Enfoque iterativo y repetitivo", "Secuencia lineal y estructurada", "Procesos flexibles y adaptables"],
+        question: "¿Cuál es el papel del Scrum Master en la resolución de conflictos dentro del equipo?",
+        options: ["Actuar como mediador y fomentar un ambiente de confianza.", "Facilitar la comunicación entre los miembros del equipo.", "Tomar decisiones por el equipo para evitar desacuerdos"],
         answer: 2
     },
     {
-        question: "¿En qué fase se realiza el desarrollo del sistema en Cascada?",
-        options: ["Diseño", "Pruebas", "Implementación"],
+        question: "¿cuál es la mejor manera de manejar un cambio inesperado en los requisitos",
+        options: ["Rechazar el cambio y seguir con el plan original", "Realizar una reunión extraordinaria para decidir si se debe incluir el cambio", "Evaluar el impacto del cambio en el Sprint Backlog y discutirlo con el Product Owner"],
         answer: 3
     },
     {
-        question: "¿Cuál de las siguientes es una desventaja de la metodología en Cascada?",
-        options: ["Buena documentación","Procesos claramente definidos","Difícil adaptación a cambios"],
-        answer: 3
+        question: "¿Qué se debe hacer si un miembro del equipo no está contribuyendo adecuadamente durante un Sprint?",
+        options: ["Informar al Product Owner para que tome medidas", "Discutir la situación en la retrospectiva del Sprint para abordar el problema", "Asumir que todos los miembros tienen sus propias razones y no intervenir"],
+        answer: 2
     },
     {
-        question: "¿Cuál es el objetivo de la fase de pruebas en Cascada?",
-        options: ["Crear el diseño detallado del sistema","Asegurar que el sistema cumple con los requerimientos","Realizar el mantenimiento del sistema"],
+        question: "¿Qué es un \"Incremento\" en Scrum?",
+        options: ["La cantidad total de trabajo completado durante un Sprint","La suma de los elementos del Product Backlog completados en un Sprint y los incrementos previos","Un documento que detalla las características nuevas del producto"],
+        answer: 2
+    },
+    {
+        question: "¿Cuál es el propósito de la reunión diaria (Daily Scrum) en un equipo Scrum?",
+        options: ["Revisar el trabajo completado y planificar el próximo Sprint","Permitir que cada miembro del equipo comparta sus logros, planes y impedimentos","Presentar el trabajo al Product Owner y recibir retroalimentación"],
         answer : 2
     }
 ];

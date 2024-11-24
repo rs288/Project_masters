@@ -4,6 +4,7 @@ class StartScene extends Phaser.Scene {
         this.titleText = null;
         this.subtitleText = null;
         this.startButton = null;
+    	this.introductionButton = null;
         this.personaje1 = null;
         this.personaje2 = null;
     }
@@ -48,7 +49,7 @@ class StartScene extends Phaser.Scene {
             strokeThickness: 4  
         }).setOrigin(0.5);
 
-        this.startButton = this.add.text(width/2, height * 0.6, "Start Game", {
+        this.startButton = this.add.text(width/2, height * 0.55, "Start Game", {
             fontSize: Math.min(width * 0.03, 24) + 'px',
             fill: '#eee3cf',
             fontFamily: '"Press Start 2P"',
@@ -69,6 +70,31 @@ class StartScene extends Phaser.Scene {
         .on('pointerout', function() {
             this.setStyle({ fill: '#eee3cf', backgroundColor: '#282a1d' });
         });
+
+	this.introductionButton = this.add.text(width/2, height * 0.7, "Guide", {
+            fontSize: Math.min(width * 0.03, 22) + 'px',
+            fill: '#eee3cf',
+            fontFamily: '"Press Start 2P"',
+            backgroundColor: '#282a1d',
+            padding: {
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 10
+            }
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => {
+        window.location.href = './Scrum.html'; // Cambia a la URL deseada
+	})
+        .on('pointerover', function() {
+            this.setStyle({ fill: '#ffff00', backgroundColor: '#666666' });
+        })
+        .on('pointerout', function() {
+            this.setStyle({ fill: '#eee3cf', backgroundColor: '#282a1d' });
+        });
+
     }
 
     create() {

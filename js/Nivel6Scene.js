@@ -67,7 +67,7 @@
                 // Dibujar tres óvalos dentro del cuadro
                 this.drawOvals(this.questionBox);
 
-                 const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "Cascada\nNivel 6", {
+                 const scrumText = this.add.text(this.questionBox.x / 2, this.questionBox.y + 20, "Scrum 2\nNivel 6", {
                      fontSize: '10px',
                      fontFamily: '"Press Start 2P"',
                      fill: '#DED947',
