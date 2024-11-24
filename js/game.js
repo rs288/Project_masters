@@ -1,4 +1,5 @@
-window.onload = function() {
+var font = new FontFaceObserver('Press Start 2P');
+font.load().then(function() {  
     const config = {
         type: Phaser.AUTO,
         width: 800,
@@ -22,4 +23,4 @@ window.onload = function() {
     };
 
     new Phaser.Game(config);
-}
+});
