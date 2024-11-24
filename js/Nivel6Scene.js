@@ -19,9 +19,9 @@
                 // Carga la imagen de fondo
                 this.load.image('nivel6', 'img/Nivel6.jpg');
                 // Carga personaje 1
-                this.load.image('personaje', 'img/personaje6.png');
+                this.load.image('personaje1', 'img/personaje1.png');
                 // Cargar personaje 2
-                //this.load.image('personaje', './img/personaje2.png');
+                this.load.image('personaje2', './img/personaje2.png');
                 // Cargar villano
                 this.load.image('villano6', 'img/villano6.png');
                 this.load.image('corazon', 'img/corazon.png')
@@ -45,9 +45,9 @@
                     wordWrap: { width: 350 }, // Limita el ancho del texto a 400 píxeles (600 - 200)
                     align: 'left' // Alinea el texto a la izquierda
                 }).setOrigin(0.5);
-             //   this.showQuestion();
                 
-                this.personaje = this.add.image(150, 500, 'personaje');
+                const personajeValue = this.registry.get('personaje');
+                this.personaje = this.add.image(150, 500, personajeValue);
                 this.personaje.setScale(0.5);
 
                 this.corazonPersonaje = this.add.image(150, 400, 'corazon');

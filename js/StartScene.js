@@ -62,7 +62,7 @@ class StartScene extends Phaser.Scene {
         })
         .setOrigin(0.5)
         .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.scene.start('MapaScene'))
+        .on('pointerdown', () => this.scene.start('SeleccionarScene'))
         .on('pointerover', function() {
             this.setStyle({ fill: '#ffff00', backgroundColor: '#666666' });
         })

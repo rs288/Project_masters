@@ -18,7 +18,7 @@ window.onload = function() {
                 height: 1200
             }
         },
-        scene: [StartScene, MapaScene, Nivel1Scene, Nivel2Scene, Nivel3Scene, Nivel4Scene, Nivel5Scene, Nivel6Scene, GameOverScene, FinishScene]
+        scene: [StartScene, SeleccionarScene, MapaScene, Nivel1Scene, Nivel2Scene, Nivel3Scene, Nivel4Scene, Nivel5Scene, Nivel6Scene, GameOverScene, FinishScene]
     };
 
     new Phaser.Game(config);
