@@ -44,7 +44,7 @@ class FinishScene extends Phaser.Scene {
             box.x + box.width / 2, 
             box.y + 120,
             finalMessage,
-            { fontSize: '28px', fill: '#000', align: 'center' }
+            { fontSize: '28px', fill: '#000', align: 'center', wordWrap: { width: box.width - 20, useAdvancedWrap: true } }
         ).setOrigin(0.5);
     }
 
